@@ -1,18 +1,26 @@
 import React, { Component } from "react";
 import PropTypes from 'prop-types';
 
-export class AddTodo extends Component {
+interface IAddTodoProps {
+  addTodo: Function;
+}
+
+interface IAddTodoState {
+  title: string;
+}
+
+class AddTodo extends Component<IAddTodoProps, IAddTodoState> {
   state = {
     title: ""
   };
 
-  onSubmit = e => {
+  onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     this.props.addTodo(this.state.title);
     this.setState({ title: "" });
   };
 
-  onChange = e => this.setState({ [e.target.name]: e.target.value });
+  onChange = (e: React.ChangeEvent<HTMLInputElement>) => this.setState({ [e.target.name]: e.target.value } as Pick<IAddTodoState, keyof IAddTodoState>);
 
   render() {
     return (
@@ -34,10 +42,6 @@ export class AddTodo extends Component {
       </form>
     );
   }
-}
-
-AddTodo.propTypes = {
-  addTodo: PropTypes.func.isRequired
 }
 
 export default AddTodo;
