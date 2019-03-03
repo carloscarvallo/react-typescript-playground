@@ -1,34 +1,31 @@
-import * as React from "react";
+import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import axios from "axios";
 import Header from "./components/layout/Header";
 import About from "./components/pages/About";
 import AddTodo from "./components/AddTodo";
 import Todos from "./components/Todos";
+import { ITodo } from "./definitions/index";
 import "./App.css";
-
-interface ITodo {
-  id: number;
-  completed: boolean;
-  title: string;
-}
 
 interface IState {
   todos: Array<ITodo>;
 }
 
-class App extends React.Component<any, IState> {
+interface IProps {}
+
+class App extends React.Component<IProps, IState> {
   state = {
     todos: []
   };
 
-  componentDidMount() {
+  componentDidMount(): void {
     axios
       .get("https://jsonplaceholder.typicode.com/todos?_limit=10")
       .then(res => this.setState({ todos: res.data }));
   }
 
-  markComplete = (id: number) => {
+  markComplete = (id: number): void => {
     this.setState({
       todos: this.state.todos.map((todo: ITodo) => {
         if (todo.id === id) {
@@ -39,18 +36,16 @@ class App extends React.Component<any, IState> {
     });
   };
 
-  delTodo = (id: number) => {
-    axios
-      .delete(`https://jsonplaceholder.typicode.com/todos/${id}`)
-      .then(res =>
-        this.setState({
-          todos: [...this.state.todos.filter((todo: ITodo) => todo.id !== id)]
-        })
-      );
+  delTodo = (id: number): void => {
+    axios.delete(`https://jsonplaceholder.typicode.com/todos/${id}`).then(() =>
+      this.setState({
+        todos: [...this.state.todos.filter((todo: ITodo) => todo.id !== id)]
+      })
+    );
   };
 
   // Add Todo
-  addTodo = (title: string) => {
+  addTodo = (title: string): void => {
     axios
       .post("https://jsonplaceholder.typicode.com/todos", {
         title,
@@ -59,7 +54,7 @@ class App extends React.Component<any, IState> {
       .then(res => this.setState({ todos: [...this.state.todos, res.data] }));
   };
 
-  render() {
+  render(): JSX.Element {
     return (
       <Router>
         <div className="App">

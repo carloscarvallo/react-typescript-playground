@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import PropTypes from 'prop-types';
 
 interface IAddTodoProps {
   addTodo: Function;
@@ -14,15 +13,15 @@ class AddTodo extends Component<IAddTodoProps, IAddTodoState> {
     title: ""
   };
 
-  onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  public onSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     this.props.addTodo(this.state.title);
     this.setState({ title: "" });
   };
 
-  onChange = (e: React.ChangeEvent<HTMLInputElement>) => this.setState({ [e.target.name]: e.target.value } as Pick<IAddTodoState, keyof IAddTodoState>);
+  public onChange = (e: React.ChangeEvent<HTMLInputElement>): void => this.setState({ [e.target.name]: e.target.value } as Pick<IAddTodoState, keyof IAddTodoState>);
 
-  render() {
+  render(): JSX.Element {
     return (
       <form onSubmit={this.onSubmit} style={{ display: "flex" }}>
         <input

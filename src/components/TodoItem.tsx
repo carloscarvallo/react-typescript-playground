@@ -1,8 +1,14 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
+import { ITodo } from "../definitions/index";
 
-export class TodoItem extends Component {
-  getStyle = () => {
+interface ITodoItemProps {
+  todo: ITodo;
+  markComplete: Function;
+  delTodo: (id: ITodo['id']) => void;
+}
+
+export class TodoItem extends Component<ITodoItemProps, any> {
+  public getStyle = (): React.CSSProperties => {
     return {
       background: "#f4f4f4",
       padding: "10px",
@@ -11,20 +17,23 @@ export class TodoItem extends Component {
     };
   };
 
-  render() {
+  public render(): JSX.Element {
     const { id, title } = this.props.todo;
     return (
       <div style={this.getStyle()}>
         <p>
           <input type="checkbox" onChange={() => this.props.markComplete(id)} />{" "}
           {title}
-          <button onClick={this.props.delTodo.bind(this, id)} style={btnStyle}>x</button>
+          <button onClick={this.props.delTodo.bind(this, id)} style={btnStyle as React.CSSProperties}>x</button>
         </p>
       </div>
     );
   }
 }
 
+/** @type {{search: React.CSSProperties}} */
+// https://github.com/Microsoft/TypeScript/issues/18744
+// https://github.com/Microsoft/TypeScript/issues/16389
 const btnStyle = {
   background: '#ff0000',
   color: '#fff',
@@ -34,9 +43,5 @@ const btnStyle = {
   cursor: 'pointer',
   float: 'right'
 }
-
-TodoItem.propTypes = {
-  todo: PropTypes.object.isRequired
-};
 
 export default TodoItem;
