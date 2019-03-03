@@ -19,7 +19,14 @@ class AddTodo extends Component<IAddTodoProps, IAddTodoState> {
     this.setState({ title: "" });
   };
 
-  public onChange = (e: React.ChangeEvent<HTMLInputElement>): void => this.setState({ [e.target.name]: e.target.value } as Pick<IAddTodoState, keyof IAddTodoState>);
+  public onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    // other alternative
+    // const { name, value }: { name: IAddTodoState['title'], value: string } = e.target;
+    this.setState({ [e.target.name]: e.target.value } as Pick<
+      IAddTodoState,
+      keyof IAddTodoState
+    >);
+  };
 
   render(): JSX.Element {
     return (
