@@ -7,7 +7,10 @@ interface ITodoItemProps {
   delTodo: (id: ITodo["id"]) => void;
 }
 
-const getStyle = (completed: ITodo['completed']): React.CSSProperties => {
+// explicit declaration
+const getStyle: (completed: ITodo["completed"]) => React.CSSProperties = (
+  completed: ITodo["completed"]
+): React.CSSProperties => {
   return {
     background: "#f4f4f4",
     padding: "10px",
