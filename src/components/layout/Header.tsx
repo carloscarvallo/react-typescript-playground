@@ -3,13 +3,13 @@ import { Link } from "react-router-dom";
 
 function Header() {
   return (
-    <header style={headerStyle}>
+    <header style={headerStyle as React.CSSProperties}>
       <h1>Todo List</h1>
       <Link style={linkStyle} to="/">
         Home
       </Link>{" "}
       |{" "}
-      <Link style={linkStyle} to="/about">
+      <Link style={linkStyle as React.CSSProperties} to="/about">
         About
       </Link>
     </header>
